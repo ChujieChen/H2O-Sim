@@ -1,14 +1,17 @@
 import numpy as np
 from ..utils import visualize
 
+
 import matplotlib.pyplot as plt
 import ffmpeg
+
 
 from scipy.stats import multivariate_normal
 
 
 class liquid:
     def __init__(self, N_x=150, N_y=150):
+
 
 
         # --------------- Physical prameters ---------------
@@ -111,10 +114,13 @@ class liquid:
 
 
 
+
     def clear(self):
         self.eta_n = np.zeros(self.N_x, self.N_y)
 
+
         return self.value
+
 
 
     def clear_region(self, hstart, wstart, hend, wend):
@@ -123,6 +129,7 @@ class liquid:
 
     def shape(self):
         return (self.N_x, self.N_y)
+
 
 
     def display_2d(self):
@@ -142,6 +149,7 @@ class liquid:
 
     def animation_3d(self):
         eta_surf_anim = visualize.eta_animation3D(self.X, self.Y, self.eta_list, self.anim_interval*self.dt, "eta_surface")
+
 
         return eta_surf_anim
 
@@ -184,6 +192,7 @@ class liquid:
                 raise Exception("can not set drop at {},{} with value {}".format(drop.x, drop.y, drop.amplitude))
 
 
+
     def __update_one_step(self):
 
         u_np1 = np.zeros((self.N_x, self.N_y))  # To hold u at next time step
@@ -200,6 +209,7 @@ class liquid:
         u_np1 = np.zeros((self.N_x, self.N_y))
         v_np1 = np.zeros((self.N_x, self.N_y))
         eta_np1 = np.zeros((self.N_x, self.N_y))
+
 
         u_np1[:-1, :] = self.u_n[:-1, :] - self.g * self.dt / self.dx * (self.eta_n[1:, :] - self.eta_n[:-1, :])
         v_np1[:, :-1] = self.v_n[:, :-1] - self.g * self.dt / self.dy * (self.eta_n[:, 1:] - self.eta_n[:, :-1])
@@ -236,6 +246,7 @@ class liquid:
         eta_np1[:, :] = self.eta_n[:, :] - self.dt * (uhwe[:, :] / self.dx + vhns[:, :] / self.dy)  # Without source/sink
 
 
+
         # Add source term if enabled.
         if (self.use_source is True):
             eta_np1[:, :] += self.dt * self.sigma
@@ -260,6 +271,7 @@ class liquid:
 #         print("Time: \t{:.2f} hours".format(time_step * dt / 3600))
 #         print("Step: \t{} / {}".format(time_step, max_time_step))
 #         print("Mass: \t{}\n".format(np.sum(eta_n)))
+
 
         self.u_list.append(self.u_n)
         self.v_list.append(self.v_n)

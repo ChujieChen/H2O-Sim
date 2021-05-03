@@ -74,8 +74,10 @@ def surface_simulation_3d(X, Y, eta_list, frame_interval, filename):
                                          codec = "libx264", extra_args = ["-pix_fmt", "yuv420p"])
     anim.save("{}.mp4".format(filename), writer = mpeg_writer)
 
+
     print("MP4 file has been saved as {}.mp4".format(filename))
     return anim    # Need to return anim object to see the animation
+
 
 
 
